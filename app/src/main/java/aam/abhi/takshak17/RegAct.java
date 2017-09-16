@@ -133,7 +133,7 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
             return response;
         }
         protected void onPostExecute(HttpResponse httpResponse){
-            buttSub.setText("yippe");
+            buttSub.setText("yippee");
         }
     }
 
