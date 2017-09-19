@@ -3,12 +3,16 @@ package aam.abhi.takshak17;
 import android.content.Intent;
 import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
+import android.support.constraint.solver.ArrayLinkedVariables;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,21 +40,58 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class RegAct extends AppCompatActivity implements View.OnClickListener {
     Drawer result = null;
+    private ListView listview;
     HttpResponse response = null;
     private IntentIntegrator qrScan;
-    //View Objects
+    //ViewReg Objects
+    private int code[] = new int[20];
     private Button buttonScan, buttSub;
     private String unid;
+    private int ptr=0,code1;
+    ArrayList<String> lis;
+    ArrayList<String> all = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg);
-        //View objects
+        //ViewReg objects
+
+        all.add("CAD/BIM WORKSHOP");
+        all.add("HARLEY DAVIDSON WORKSHOP");all.add("");all.add("");all.add("");all.add("");all.add("");all.add("VYOMA");all.add("ERUDITE");all.add("ISRO EXIBITION");all.add("");all.add("");all.add("ANGRY ROCKET");all.add("FOOSBALL");all.add("SAE GARAGE");
+        all.add("SPACE WALK");//16
+        all.add("");all.add("");all.add("");all.add("PRO MECHANIS");all.add("CLASH OF QUEENS");all.add("BMW TECHNICAL TALK");all.add("WEARABLE TECHNOLOGY WORKSHOP");
+        //mechanical
+
+        all.add("POSTAG:PAPER PRESENTATION");all.add(" ELEKTRA- QUIZ COMPETITION");all.add("BATTLEFIELD:LASER TAG");all.add("REWIRED");all.add("DARK ROOM");all.add("ARCADE-IOUS");
+        all.add("INQUESTO: CRIME INVESTIGATIO N");all.add("SUMO SUIT BRAWL");all.add("ZAP 4x4");all.add("THE MYSTERY BOX");
+        //ELECTRICAL
+
+        all.add("TECH VILLE");all.add("ENIGMA");all.add("HACKATHON");all.add("CODEAGE17");all.add("Projecto");all.add("LAN Gaming");
+        //CSE
+
+        all.add("Contraption");all.add("Slip and Slide");all.add("Slip Soccer");all.add("Labrynthos");
+        all.add("Revit");all.add("Crossover");all.add("Nirhara");all.add("Expozione");all.add("Prayaan");all.add("Voila");all.add("MACE DRONE PRIX");all.add("MACE Open School Championship");all.add("Maker Summit Mark 2.0");all.add("Idea Pitching");all.add("Circuit Hunt");all.add("GRAFFITI");all.add("Jugaad IT");all.add("LAN Gaming");
+        all.add("VR Gaming");all.add("Pre Workshop");all.add("RoboGenesis");all.add("");all.add("Electronic Wizard");all.add("Techical Quiz");all.add("Word Hunt");all.add("Coding");all.add("Web Designing");all.add("Tresure Hunt");all.add("Live Photography");all.add("Live Quiz");all.add("Live Gaming");all.add("Spot games");
+        all.add("Troll Competition");all.add("Elektra");all.add("");all.add("");all.add("");all.add("");all.add("");
+        lis= new ArrayList<>();
+
         buttonScan = (Button) findViewById(R.id.sc);
         buttSub = (Button) findViewById(R.id.sub);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Click action
+                Toast.makeText(RegAct.this,"xx",Toast.LENGTH_LONG).show();
+                Intent i = new Intent(RegAct.this,RegPage.class);
+                startActivityForResult(i,2);
+            }
+        });
+
         buttSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +130,8 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
                         item1,
                         new DividerDrawerItem(),
                         item2,
-                        new SecondaryDrawerItem().withName("Scan").withSelectable(false)
+                        new SecondaryDrawerItem().withName("Scan").withSelectable(false),
+                        new SecondaryDrawerItem().withName("ViewReg All").withSelectable(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -139,6 +181,28 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode==2){
+            try {
+                code1=data.getIntExtra("code",10000);
+                if(code1!=10000){
+                    code[ptr]=code1;
+                    ptr++;
+                    listview=(ListView)findViewById(R.id.listall);
+                    lis.add(all.get(code1-1)+code1);
+                    ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lis);
+                    listview.setAdapter(itemAdapter);
+                    //buttonScan.setText(ptr);
+                }
+            }
+            catch (NullPointerException e){
+                e.printStackTrace();
+            }
+
+
+
+        }
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             //if qrcode has nothing in it
@@ -191,6 +255,12 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
             startActivity(i);
             finish();
         }
+        else if(position==5){
+            Toast.makeText(RegAct.this, "ViewReg All", Toast.LENGTH_SHORT).show();
+            result.closeDrawer();
+            Intent i = new Intent(this,ViewReg.class);
+            startActivity(i);
+        }
 
 
 
@@ -204,6 +274,8 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         finish();
     }
+
+
 
 
 }

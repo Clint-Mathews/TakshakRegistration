@@ -27,7 +27,7 @@ import org.json.JSONObject;
 
 public class ScanActivity extends AppCompatActivity implements View.OnClickListener {
     private IntentIntegrator qrScan;
-    //View Objects
+    //ViewReg Objects
     Drawer result = null;
 
     private Button buttonScan;
@@ -36,7 +36,7 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-        //View objects
+        //ViewReg objects
         buttonScan = (Button) findViewById(R.id.buttonScan);
         textViewName = (TextView) findViewById(R.id.textViewName);
         //textViewAddress = (TextView) findViewById(R.id.textViewAddress);
@@ -69,7 +69,8 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
                         item1,
                         new DividerDrawerItem(),
                         item2,
-                        new SecondaryDrawerItem().withName("Scan").withSelectable(false)
+                        new SecondaryDrawerItem().withName("Scan").withSelectable(false),
+                        new SecondaryDrawerItem().withName("View All").withSelectable(false)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -153,7 +154,13 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-
+        else if(position==5){
+            Toast.makeText(ScanActivity.this, "New Reg", Toast.LENGTH_SHORT).show();
+            result.closeDrawer();
+            Intent i = new Intent(this,ViewReg.class);
+            startActivity(i);
+            finish();
+        }
 
 
 

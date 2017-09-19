@@ -1,11 +1,41 @@
 
-<LinearLayout android:layout_height="match_parent"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:textAlignment="center"
+    android:padding="10dp"
+    android:gravity="center"
+    android:background="@drawable/back"
+    android:layout_centerInParent="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
-        android:id="@+id/content_frame"
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/logo3" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_gravity="center"
+        android:text="Enter Pin"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:inputType="numberPassword"
+        android:id="@+id/pin"
+
+        android:hint="PIN"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onLogin"
+        android:text="Login"/>
 </LinearLayout>

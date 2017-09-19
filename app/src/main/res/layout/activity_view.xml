@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/back"
+
+    android:layout_height="match_parent"
+    tools:context="aam.abhi.takshak17.ViewReg">
+
+    <com.jaredrummler.materialspinner.MaterialSpinner
+        android:id="@+id/spinner3"
+        android:layout_margin="10dp"
+        app:ms_arrow_tint="#ffffff"
+        app:ms_background_color="#303030"
+
+        app:ms_text_color="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/listdeptwise"
+        android:layout_height="wrap_content">
+
+    </ListView>
+
+
+
+</LinearLayout>

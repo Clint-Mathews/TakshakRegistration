@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import java.util.List;
 
 /**
- * Created by user on 9/15/2017.
+ * Created by Abhi on 9/15/2017.
  */
 
 public class Reg extends Fragment {

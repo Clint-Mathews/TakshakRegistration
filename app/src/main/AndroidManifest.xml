@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="aam.abhi.takshak17">
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ScanActivity" />
-        <activity android:name=".RegAct"></activity>
+        <activity android:name=".RegAct" />
+        <activity android:name=".RegPage" />
+        <activity android:name=".ViewReg"></activity>
     </application>
 
 </manifest>
