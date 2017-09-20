@@ -28,7 +28,7 @@ public int dpcode=1000,evcode=1000,code,ptr;
         spinner1.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
             @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make(view, "Clicked " + item+position, Snackbar.LENGTH_LONG).show();
+                //Snackbar.make(view, "Clicked " + item+position, Snackbar.LENGTH_LONG).show();
                 MaterialSpinner spinner2 = (MaterialSpinner) findViewById(R.id.spinner2);
                 dpcode=position;
                 if(position==1)
@@ -48,7 +48,7 @@ public int dpcode=1000,evcode=1000,code,ptr;
                 spinner2.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
                     @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                        Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
+                       // Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show();
                         evcode=position;
                         switch (dpcode){
                             case 1:

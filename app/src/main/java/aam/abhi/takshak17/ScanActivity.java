@@ -113,6 +113,7 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
                     //in this case you can display whatever data is available on the qrcode
                     //to a toast
                     Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
+
                 }
             }
         } else {
@@ -137,25 +138,21 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
     void OnClick(int position){
 
         if(position==1){
-            Toast.makeText(ScanActivity.this, "Home", Toast.LENGTH_SHORT).show();
             result.closeDrawer();
             finish();
         }
         else if(position==3){
-            Toast.makeText(ScanActivity.this, "New Reg", Toast.LENGTH_SHORT).show();
             result.closeDrawer();
             Intent i = new Intent(this,RegAct.class);
             startActivity(i);
             finish();
         }
         else if(position==4){
-            Toast.makeText(ScanActivity.this, "Scan", Toast.LENGTH_SHORT).show();
             result.closeDrawer();
 
         }
 
         else if(position==5){
-            Toast.makeText(ScanActivity.this, "New Reg", Toast.LENGTH_SHORT).show();
             result.closeDrawer();
             Intent i = new Intent(this,ViewReg.class);
             startActivity(i);

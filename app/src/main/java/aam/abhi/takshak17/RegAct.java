@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -51,7 +52,7 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
     private int code[] = new int[20];
     private Button buttonScan, buttSub;
     private String unid;
-    private int ptr=0,code1;
+    private int ptr=0,code1,sem;
     ArrayList<String> lis;
     ArrayList<String> all = new ArrayList<>();
     @Override
@@ -79,6 +80,17 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
         all.add("Troll Competition");all.add("Elektra");all.add("");all.add("");all.add("");all.add("");all.add("");
         lis= new ArrayList<>();
 
+
+        MaterialSpinner spinner1 = (MaterialSpinner) findViewById(R.id.spinsem);
+        spinner1.setItems("--Select Semester--","S1","S2", "S3", "S4", "S5", "S6", "S7","S8");
+        spinner1.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                sem = position;
+            }
+        });
+
+
         buttonScan = (Button) findViewById(R.id.sc);
         buttSub = (Button) findViewById(R.id.sub);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -86,7 +98,6 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 // Click action
-                Toast.makeText(RegAct.this,"xx",Toast.LENGTH_LONG).show();
                 Intent i = new Intent(RegAct.this,RegPage.class);
                 startActivityForResult(i,2);
             }
@@ -181,19 +192,28 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+int fl=1;
         if(requestCode==2){
             try {
                 code1=data.getIntExtra("code",10000);
                 if(code1!=10000){
+                    for(int i=0;i<ptr;i++){
+                        if(code1==code[i]){
+                            fl=0;
+                            Toast.makeText(RegAct.this,"Already Added",Toast.LENGTH_LONG).show();
+                            break;
+                        }else fl=1;
+                    }
+
+                    if(fl==1){
                     code[ptr]=code1;
                     ptr++;
                     listview=(ListView)findViewById(R.id.listall);
-                    lis.add(all.get(code1-1)+code1);
+                    lis.add(all.get(code1-1));
                     ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lis);
                     listview.setAdapter(itemAdapter);
                     //buttonScan.setText(ptr);
-                }
+                }}
             }
             catch (NullPointerException e){
                 e.printStackTrace();
@@ -239,24 +259,20 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
     void OnClick(int position){
 
         if(position==1){
-            Toast.makeText(RegAct.this, "Home", Toast.LENGTH_SHORT).show();
             result.closeDrawer();
             finish();
         }
         else if(position==3){
-            Toast.makeText(RegAct.this, "New Reg", Toast.LENGTH_SHORT).show();
             result.closeDrawer();
 
         }
         else if(position==4){
-            Toast.makeText(RegAct.this, "Scan", Toast.LENGTH_SHORT).show();
             result.closeDrawer();
             Intent i = new Intent(this,ScanActivity.class);
             startActivity(i);
             finish();
         }
         else if(position==5){
-            Toast.makeText(RegAct.this, "ViewReg All", Toast.LENGTH_SHORT).show();
             result.closeDrawer();
             Intent i = new Intent(this,ViewReg.class);
             startActivity(i);
