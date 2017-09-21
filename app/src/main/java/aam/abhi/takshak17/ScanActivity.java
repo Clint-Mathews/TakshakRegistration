@@ -104,6 +104,7 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
                     //converting the data to json
                     JSONObject obj = new JSONObject(result.getContents());
                     //setting values to textviews
+//                    Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
                     textViewName.setText(obj.getString("name"));
                     //textViewAddress.setText(obj.getString("address"));
                 } catch (JSONException e) {

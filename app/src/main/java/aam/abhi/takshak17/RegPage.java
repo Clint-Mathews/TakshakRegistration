@@ -283,7 +283,7 @@ public int dpcode=1000,evcode=1000,code,ptr;
 if(dpcode!=1000&&evcode!=1000) {
     Intent i = new Intent();
     i.putExtra("code", code);
-    setResult(2, i);
+    setResult(3, i);
     finish();
 }
 
@@ -302,7 +302,7 @@ if(dpcode!=1000&&evcode!=1000) {
 
         Intent i =new Intent();
         i.putExtra("code",10000);
-        setResult(2,i);
+        setResult(3,i);
         finish();
     }
 

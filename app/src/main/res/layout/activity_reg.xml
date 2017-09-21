@@ -30,7 +30,8 @@
         android:background="@drawable/back"
 
         android:orientation="vertical"
-        android:layout_centerHorizontal="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 <android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -46,6 +47,7 @@
         android:padding="20dp"
         android:orientation="vertical"
         android:layout_centerHorizontal="true">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,13 +57,15 @@
             android:layout_marginBottom="10dp"
             android:textAlignment="center"
             android:text="New Registration"/>
+
         <EditText
+            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
-            android:id="@+id/name"
-            android:textColorHint="#999999"
+            android:inputType="text"
             android:textColor="#ffffff"
+            android:textColorHint="#999999"
             android:textSize="15sp" />
 
 
@@ -71,49 +75,43 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:layout_gravity="center">
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:text="Male"/>
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffff"
 
-                android:text="Female"/>
         </RadioGroup>
 
 
         <EditText
+            android:id="@+id/college"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="College"
-            android:id="@+id/college"
+            android:inputType="text"
             android:textColor="#ffffff"
-            android:textColorHint="#999999"
 
+            android:textColorHint="#999999"
             android:textSize="15sp" />
 
 
         <EditText
+            android:id="@+id/Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Branch"
-            android:id="@+id/branch"
-            android:textColorHint="#999999"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
             android:textColor="#ffffff"
+            android:textColorHint="#999999"
             android:textSize="15sp" />
-        <com.jaredrummler.materialspinner.MaterialSpinner
-            android:id="@+id/spinsem"
-            android:layout_margin="1dp"
-            app:ms_arrow_tint="#000000"
-            app:ms_background_color="#303030"
-            app:ms_text_color="#ffffff"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/Number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Number"
+            android:inputType="number"
+            android:textColor="#ffffff"
+            android:textColorHint="#999999"
+            android:textSize="15sp" />
+
+    </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

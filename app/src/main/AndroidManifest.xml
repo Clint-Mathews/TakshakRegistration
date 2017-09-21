@@ -21,7 +21,11 @@
         <activity android:name=".ScanActivity" />
         <activity android:name=".RegAct" />
         <activity android:name=".RegPage" />
-        <activity android:name=".ViewReg"></activity>
+        <activity android:name=".ViewReg" />
+        <activity android:name=".RegEvent" />
+        <activity
+            android:name=".RegEvent2"
+            android:label="@string/title_activity_reg_event2"></activity>
     </application>
 
 </manifest>

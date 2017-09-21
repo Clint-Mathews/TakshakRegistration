@@ -3,11 +3,11 @@ package aam.abhi.takshak17;
 import android.content.Intent;
 import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
+import android.os.PersistableBundle;
 import android.support.constraint.solver.ArrayLinkedVariables;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -46,15 +46,20 @@ import java.util.Iterator;
 
 import cz.msebera.android.httpclient.Header;
 
-public class RegAct extends AppCompatActivity implements View.OnClickListener {
+import android.os.Bundle;
+import android.app.Activity;
+
+public class RegEvent2 extends AppCompatActivity implements View.OnClickListener {
+
     Drawer result = null;
     private ListView listview;
     private IntentIntegrator qrScan;
     //ViewReg Objects
     private int code[] = new int[20];
-    private Button buttonScan, buttSub;
+    private Button buttSub;
     private EditText Name, Email, Number;
     private String unid;
+    private boolean flag = true;
     private AsyncHttpClient client = new AsyncHttpClient();
     private int ptr=0,code1,sem;
     ArrayList<String> lis;
@@ -67,12 +72,18 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
     private String getUnid(){
         return this.unid;
     }
+    public void setflag(boolean fla){
+        this.flag = fla;
+    }
+    public boolean getflag(){
+        return flag;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reg);
-        //ViewReg objects
+        setContentView(R.layout.activity_reg_event2);
+        final String userID = savedInstanceState.getString("userID");
 
         all.add("CAD/BIM WORKSHOP");
         all.add("HARLEY DAVIDSON WORKSHOP");all.add("");all.add("");all.add("");all.add("");all.add("");all.add("VYOMA");all.add("ERUDITE");all.add("ISRO EXIBITION");all.add("");all.add("");all.add("ANGRY ROCKET");all.add("FOOSBALL");all.add("SAE GARAGE");
@@ -104,22 +115,50 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
 //        });
 
 
-        buttonScan = (Button) findViewById(R.id.sc);
         buttSub = (Button) findViewById(R.id.sub);
-        Name = (EditText) findViewById(R.id.name);
-        Email = (EditText) findViewById(R.id.Email);
-        Number = (EditText) findViewById(R.id.Number);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Click action
-                Intent i = new Intent(RegAct.this,RegPage.class);
-                startActivityForResult(i,2);
+                Intent i = new Intent(RegEvent2.this,RegPage.class);
+                startActivityForResult(i,3);
             }
         });
+        buttSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i = 0; i<ptr; ptr++){
+                    RequestParams params = new RequestParams();
+                    params.put("userID", userID);
+                    params.put("eventID", code[i]);
+                    client.post("http://takshak.in/2017/public/registration/RegisterEvent", params, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            JSONObject json = null;
+                            try {
+                                json = response.getJSONObject("data");
+                                boolean status = json.getBoolean("status");
+                                if(status){
+                                    Toast.makeText(RegEvent2.this, "Done",Toast.LENGTH_LONG).show();
+                                }
+                                else{
+                                    Toast.makeText(RegEvent2.this, "Failed",Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(RegEvent2.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                            }
+                        }
 
-       // textViewName = (TextView) findViewById(R.id.textViewName);
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+
+                        }
+                    });
+                }
+            }
+        });
+        // textViewName = (TextView) findViewById(R.id.textViewName);
         //textViewAddress = (TextView) findViewById(R.id.textViewAddress);
 
         PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("Home").withSelectable(false);
@@ -164,106 +203,40 @@ public class RegAct extends AppCompatActivity implements View.OnClickListener {
         //intializing scan object
         qrScan = new IntentIntegrator(this);
 
-        //attaching onclick listener
-        buttonScan.setOnClickListener(this);
-
     }
     //Getting the scan results
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-int fl=1;
-        if(requestCode==2){
+        int fl=1;
+        if(requestCode==3){
             try {
                 code1=data.getIntExtra("code",10000);
                 if(code1!=10000){
                     for(int i=0;i<ptr;i++){
                         if(code1==code[i]){
                             fl=0;
-                            Toast.makeText(RegAct.this,"Already Added",Toast.LENGTH_LONG).show();
+                            Toast.makeText(RegEvent2.this,"Already Added",Toast.LENGTH_LONG).show();
                             break;
                         }else fl=1;
                     }
 
                     if(fl==1){
-                    code[ptr]=code1;
-                    ptr++;
-                    listview=(ListView)findViewById(R.id.listall);
-                    lis.add(all.get(code1-1));
-                    ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lis);
-                    listview.setAdapter(itemAdapter);
-                    //buttonScan.setText(ptr);
-                }}
+                        code[ptr]=code1;
+                        ptr++;
+                        listview=(ListView)findViewById(R.id.listall);
+                        lis.add(all.get(code1-1));
+                        ArrayAdapter<String> itemAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,lis);
+                        listview.setAdapter(itemAdapter);
+                        //buttonScan.setText(ptr);
+                    }}
             }
             catch (NullPointerException e){
                 e.printStackTrace();
             }
 
-
-
         }
 
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            //if qrcode has nothing in it
-            if (result.getContents() == null) {
-                Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show();
-            } else {
-                //if qr contains data
-//                try {
-                    //converting the data to json
-//                    JSONObject obj = new JSONObject(result.getContents());
-                    //setting values to textviews
-//                    unid=(obj.getString("unid"));
-                    RegAct.this.unid = result.getContents();
-                Toast.makeText(this, this.unid, Toast.LENGTH_LONG).show();
-                buttSub.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RequestParams params = new RequestParams();
-                        params.put("userID", RegAct.this.unid);
-                        params.put("userEmail", Email.getText());
-                        params.put("Name", Name.getText());
-                        params.put("Number", Number.getText());
-                        Toast.makeText(RegAct.this, RegAct.this.unid,Toast.LENGTH_LONG).show();
-                        client.post("http://takshak.in/2017/public/registration/getUserInfo", params, new JsonHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody){
-                                try {
-                                    JSONArray jsonArray = responseBody.getJSONArray("data");
-                                    String userID = jsonArray.getJSONObject(0).getString("userID");
-                                    if(userID.equals(RegAct.this.unid)){
-                                        Intent i = new Intent(RegAct.this,RegEvent2.class);
-                                        i.putExtra("userID", userID);
-                                        startActivity(i);
-                                    }
-                                    else{
-                                        Toast.makeText(RegAct.this, "Error",Toast.LENGTH_LONG).show();
-                                    }
-                                } catch (JSONException e) {
-                                    Toast.makeText(RegAct.this, e.getMessage(),Toast.LENGTH_LONG).show();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-                                Toast.makeText(RegAct.this, "Failed",Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                });
-                    //textViewAddress=(obj.getString("address"));
-//                } catch (JSONException e) {
-//                    //if control comes here
-//                    //that means the encoded format not matches
-//                    //in this case you can display whatever data is available on the qrcode
-//                    //to a toast
-//                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-//                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
     }
     @Override
     public void onClick(View view) {
@@ -306,8 +279,5 @@ int fl=1;
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         finish();
     }
-
-
-
 
 }
